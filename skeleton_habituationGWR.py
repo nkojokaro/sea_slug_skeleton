@@ -14,30 +14,39 @@ import matplotlib.pyplot as plt
 ###############################
 # Define input stimulation
 ###############################
-# TODO: Set a variable called stv to 4, this will define 
+# TODO: Set a variable called stv CHANGED TO STARTING_WEIGHT to 4, this will define 
 #        the weight of the connection from input to output
-# stv = 
+starting_weight = 4 #formally stv
 
 # TODO: set up an input pulse called pls
-# pls = 
+pulse = [0, 0, 1, 0, 0] #formally pulse
 
-# TODO: then create a list of 6 pulses, called x, to use for input
-# x = 
 
-v = stv # Set connection weight to start weight value
+# TODO: then create a list of 6 pulses, called x CHANGED TO INPUT, to use for input
+input_stim = pulse * 6
+
+weight = starting_weight# Set connection weight to start weight value
+
+habituation = 0.7 #rate at which sea slug gets used to the pulse
 
 ###############################
 # Set up and run simulation
 ###############################
 
-nTs = len(x) # find the length of the input list
-y = np.zeros((1,nTs)) # set up (define) a vector for the output time series
+nTs = len(input_stim) # find the length of the input list
+output = np.zeros((1,nTs)) # set up (define) a vector for the output time series
 
 # TODO: use a for-loop to iterate 
 #        through each time step in 
 #        the input series and calculate
 #        the output at each time step. Ex:
-# for ...
+for t in range(nTs):
+    output[0,t] = input_stim[t] * weight
+    
+    #when sea slug habituates, set:
+    if (input_stim[t] > 0):
+        weight *= habituation
+    
 #     then indent 4 spaces and write the equation that
 #     describes how each input value in the vector x is 
 #     transformed to the output value in the vector y
@@ -70,4 +79,4 @@ def showresults(x,y,nTs,stv):
 # - Comment out the call to showresults below
 # - Comment out any print statements added during code development
 # - Make sure you keep x, y, pls, and other variable names the same
-showresults(x,y,nTs,stv)
+showresults(input_stim,output,nTs,starting_weight)
